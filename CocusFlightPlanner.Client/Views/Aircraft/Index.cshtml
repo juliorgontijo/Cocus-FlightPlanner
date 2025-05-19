@@ -1,0 +1,36 @@
+﻿@model CocusFlightPlanner.Application.ViewModel.AircraftTypeViewModel
+
+@{
+    ViewData["Title"] = "Aircrafts";
+}
+
+@section Toolbar {
+    <div>
+        <span>Aircraft types</span>
+    </div>
+    <div>
+        <a class="btn btn-primary btn-sm" asp-area="" asp-controller="Aircraft" asp-action="Upsert">Create New</a>
+    </div>
+}
+
+<div class="mt-5">
+    @{ await Html.RenderPartialAsync("_listAircraftTypes", Model); }
+</div>
+
+@section Scripts {
+    <script>
+        debugger;
+        const deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const form = deleteModal.querySelector('#deleteForm');
+            const input = deleteModal.querySelector('#deleteId');
+
+            input.value = id;
+            form.action = `/Aircraft/Delete/${id}`;
+        });
+    </script>
+}
+
+

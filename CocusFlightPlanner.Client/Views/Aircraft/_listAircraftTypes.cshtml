@@ -1,0 +1,29 @@
+﻿@model CocusFlightPlanner.Application.ViewModel.AircraftTypeViewModel
+
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Mtow (tons)</td>
+            <td>Cruise Fuel Burn (kg/km)</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var aircraftType in Model.AircraftTypes)
+        {
+            <tr>
+                <td>
+                    <a asp-area="" asp-controller="Aircraft" asp-action="Upsert" asp-route-id="@aircraftType.Id">@aircraftType.Name</a>
+                </td>
+                <td>@aircraftType.Mtow</td>
+                <td>@aircraftType.CruiseFuelBurn</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="@aircraftType.Id">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

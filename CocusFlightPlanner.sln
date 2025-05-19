@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocusFlightPlanner.Common", "CocusFlightPlanner.Shared\CocusFlightPlanner.Common.csproj", "{F726DECC-380D-4D3A-B224-2667E5519EB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocusFlightPlanner.Application", "CocusFlightPlanner.Client\CocusFlightPlanner.Application.csproj", "{3D6CF1B2-01C8-486C-B793-3050A87B3D83}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F726DECC-380D-4D3A-B224-2667E5519EB1} = {F726DECC-380D-4D3A-B224-2667E5519EB1}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F726DECC-380D-4D3A-B224-2667E5519EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F726DECC-380D-4D3A-B224-2667E5519EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F726DECC-380D-4D3A-B224-2667E5519EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F726DECC-380D-4D3A-B224-2667E5519EB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D6CF1B2-01C8-486C-B793-3050A87B3D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6CF1B2-01C8-486C-B793-3050A87B3D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6CF1B2-01C8-486C-B793-3050A87B3D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6CF1B2-01C8-486C-B793-3050A87B3D83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

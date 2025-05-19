@@ -1,0 +1,35 @@
+﻿@model CocusFlightPlanner.Application.ViewModel.AirportViewModel
+
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>IATA Code</td>
+            <td>ICAO Code</td>
+            <td>Altitude</td>
+            <td>Latitude</td>
+            <td>Longitude</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var airport in Model.Airports)
+        {
+            <tr>
+                <td>
+                    <a asp-area="" asp-controller="Airport" asp-action="Upsert" asp-route-id="@airport.Id">@airport.Name</a>
+                </td>
+                <td>@airport.IataCode</td>
+                <td>@airport.IcaoCode</td>
+                <td>@airport.Altitude</td>
+                <td>@airport.Latitude</td>
+                <td>@airport.Longitude</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="@airport.Id">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,62 @@
+﻿@model CocusFlightPlanner.Application.ViewModel.RouteViewModel
+
+@{
+    // Group the routes by Origin/Destination combination
+    var groupedRoutes = Model.Routes
+        .GroupBy(r => new { 
+            Id = r.Id,
+            OriginIata = r.Origin.IataCode,
+            OriginName = r.Origin.Name,
+            DestinationIata = r.Destination.IataCode,
+            DestinationName = r.Destination.Name,
+            r.Distance
+        });
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Distance</th>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in groupedRoutes)
+        {
+            <tr class="table-primary">
+                <td>@group.Key.OriginIata - @group.Key.OriginName</td>
+                <td>@group.Key.DestinationIata - @group.Key.DestinationName</td>
+                <td>@group.Key.Distance.ToString("N0") km</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="@group.Key.Id">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" class="p-0">
+                    <table class="table mb-0 table-sm table-bordered ms-5">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Aircraft Type</th>
+                                <th>Total Fuel Burn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var route in group)
+                            {
+                                <tr>
+                                    <td>@route.Aircraft.Name</td>
+                                    <td>@route.TotalFuelBurn.ToString("N0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

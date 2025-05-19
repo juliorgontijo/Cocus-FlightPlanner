@@ -1,0 +1,104 @@
+﻿@model CocusFlightPlanner.Application.ViewModel.RouteUpsertViewModel
+
+@section Toolbar {
+    <div>
+        <span>Create New Route</span>
+    </div>
+}
+
+@{
+    var url = Url.Action("GetById", "Airport");
+}
+
+<form asp-controller="Route" asp-action="Upsert" method="post" class="mt-3">
+    <input type="hidden" asp-for="Route.Id" />
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label" asp-for="Route.Origin">Origin</label>
+                <select class="form-select @(ViewData.ModelState["Route.Origin"]?.Errors.Count > 0 ? "is-invalid" : "")"
+                        asp-for="Route.Origin"
+                        asp-items="Model.Airports"
+                        id="originAirport"
+                        onchange="javascript:fetchData(event);">
+                    <option value="">-- Please select --</option>
+                </select>
+                <span asp-validation-for="Route.Origin" class="invalid-feedback"></span>
+                <small id="originAirportName" class="form-text text-muted"></small>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label" asp-for="Route.Destination">Destination</label>
+                <select class="form-select @(ViewData.ModelState["Route.Destination"]?.Errors.Count > 0 ? "is-invalid" : "")"
+                        asp-for="Route.Destination"
+                        asp-items="Model.Airports"
+                        id="destinationAirport"
+                        onchange="javascript:fetchData(event);">
+                    <option value="">-- Please select --</option>
+                </select>
+                <span asp-validation-for="Route.Destination" class="invalid-feedback"></span>
+                <small id="destinationAirportName" class="form-text text-muted"></small>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Distance</label>
+                <p id="airportDistance" class="form-control-plaintext">—</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-start">
+        <a class="btn btn-secondary btn-sm me-2" asp-controller="Route" asp-action="Index">Cancel</a>
+        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        const originSelect = document.getElementById("originAirport");
+        const destinationSelect = document.getElementById("destinationAirport");
+
+        function fetchDistance() {
+            const originId = originSelect.value;
+            const destinationId = destinationSelect.value;
+
+            if (!originId || !destinationId) return;
+
+            fetch(`/Route/GetDistance?originId=${originId}&destinationId=${destinationId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const label = document.getElementById("airportDistance");
+                    label.textContent = data.success
+                        ? `${data.distance.toFixed(2)} km`
+                        : "Distance unavailable";
+                })
+                .catch(error => {
+                    console.error("Error fetching distance:", error);
+                });
+        }
+
+        function fetchData(event) {
+            const element = event.target;
+            if (!element.value) return;
+
+            fetch(`@url?id=${element.value}`)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    const labelId = element.id.includes('origin') ? "originAirportName" : "destinationAirportName";
+                    document.getElementById(labelId).textContent = data.name;
+                    fetchDistance();
+                })
+                .catch(error => {
+                    console.error("Error fetching airport data:", error);
+                });
+        }
+    </script>
+}
