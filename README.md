@@ -1,6 +1,6 @@
 # CocusFlightPlanner
 
-![Screenshot 1](/screenshot1.png)
+![Screenshot 1](/Screenshot1.png)
 
 ## Technical considerations and assumptions
 * As requested, the project was created using .Net MVC architecture. However, my personal preference is to use a more modern client technology, like Angular or React;
